@@ -1,0 +1,114 @@
+@import './vars.scss';
+@import './normalize.scss';
+@import './typography.scss';
+
+.container{
+    max-width: 1140px;
+    padding: 0px 10px;
+    margin: 0 auto;
+}
+
+.message{
+    color: var(--red);
+}
+
+*{
+    font-family: 'Montserrat';
+}
+
+.wrapper{
+    display: flex;
+}
+
+.mainContent{
+    padding: 15px 0px;
+    margin-left: 60px;
+    transition: margin-left 0.4s; 
+}
+
+.mainContentActive{
+    padding: 15px 0px;
+    margin-left: 300px; 
+    transition: margin-left 0.4s;
+}
+
+.card{
+    width: 250px;
+    background: #EFF2FD;
+    border-radius: 15px;
+    padding: 20px 0px 20px 25px;
+}
+
+.cardName{
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 18px;
+    color: var(--black);
+}
+
+.formName{
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--blue)
+}
+
+.cardItemsList{
+
+    margin-top: 20px;
+
+    li{
+        display: flex;
+        align-items: flex-end;
+
+        &:not(:first-child){
+            margin-top: 10px;
+        }
+
+        div{
+            margin-left: 10px;
+            font-size: 13px;
+            line-height: 15px;
+        }
+    }
+}
+
+.cardButton{
+    width: 140px;
+    height: 30px;
+    border-radius: 10px;
+    background: var(--blue);
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    transition: background-color 0.4s;
+
+    &:hover{
+        background: var(--violet);
+    }
+}
+
+input{
+    border: 1px solid #E0E0E0;
+    border-radius: 15px;
+    width: 300px;
+    height: 35px;
+    display: block;
+    padding-left: 15px;
+}
+
+label{
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.formItem{
+    &:not(:first-child){
+        margin-top: 15px;
+    }
+}

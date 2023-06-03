@@ -1,0 +1,15 @@
+.submitButton{
+    width: 200px;
+    height: 40px;
+    background: var(--blue);
+    border-radius: 10px;
+    color: var(--white);
+    font-weight: 700;
+    transition: background-color 0.4s;
+    margin: 0 auto;
+    margin-top: 30px;
+
+    &:hover{
+        background: var(--violet);
+    }
+}

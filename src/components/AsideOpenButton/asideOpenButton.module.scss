@@ -1,0 +1,34 @@
+.asideOpenButtonActive{
+    width: 60px;
+    height: 100vh;
+    background: var(--blue);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 15px 0px;
+    position: absolute;
+    transform: translateX(0px);
+    transition: transform 0.4s;
+    transition-delay: 0.2s;
+    top: 0;
+    left: 0;
+}
+
+.asideOpenButton{
+    width: 60px;
+    height: 100vh;
+    background: var(--blue);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 15px 0px;
+    position: absolute;
+    transform: translateX(-60px);
+    transition: transform 0.4s;
+    top: 0;
+    left: 0;
+}
+
+.menu{
+    cursor: pointer;
+}

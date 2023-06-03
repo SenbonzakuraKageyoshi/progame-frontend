@@ -1,0 +1,40 @@
+.asideActive{
+    width: 300px;
+    height: 100vh;
+    background: var(--blue);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 15px 0px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: left 0.4s;
+    z-index: 10;
+}
+
+.aside{
+    width: 300px;
+    height: 100vh;
+    background: var(--blue);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 15px 0px;
+    top: 0;
+    left: -300px;
+    position: absolute;
+    transition: left 0.4s;
+    z-index: 10;
+}
+
+.asideMain{
+    margin-top: 15px;
+}
+
+.arrow{
+    position: fixed;
+    bottom: 60px;
+    left: 270px;
+    cursor: pointer;
+}

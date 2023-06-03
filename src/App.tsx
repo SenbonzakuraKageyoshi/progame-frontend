@@ -1,26 +1,35 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Aside from './components/Aside/Aside';
+import AsideOpenButton from './components/AsideOpenButton/AsideOpenButton';
+import PageTitle from './components/PageTitle/PageTitle';
+import MyCourseItem from './components/MyCourseItem/MyCourseItem';
+import { CurrentLocation } from './types/currentLocation';
+import AvailableCourseItem from './components/AvailableCourseItem/AvailableCourseItem';
 
-function App() {
+const App = () => {
+
+  const location = localStorage.getItem('progame-location');
+
+  const [asideIsOpened, setAsideIsOpened] = React.useState(true);
+  const [currentLocation, setCurrentLocation] = React.useState<CurrentLocation>(location ? JSON.parse(location) : {id: 1, name: 'Мои курсы'});
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <>
+    <div className='wrapper'>
+      <div className="asideWrapper">
+        <Aside isOpened={asideIsOpened} setIsOpened={setAsideIsOpened} currentLocation={currentLocation} setCurrentLocation={setCurrentLocation} />
+        <AsideOpenButton isOpened={asideIsOpened} setIsOpened={setAsideIsOpened} />
+      </div>
+      <div className={asideIsOpened ? 'mainContentActive' : 'mainContent'}>
+        <div className="container">
+          <PageTitle title={currentLocation.name}/>
+          {currentLocation.id === 1 && <MyCourseItem />}
+          {currentLocation.id === 2 && <AvailableCourseItem />}
+        </div>
+      </div>
     </div>
-  );
+    </>
+  )
 }
 
-export default App;
+export default App

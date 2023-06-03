@@ -1,0 +1,18 @@
+.user{
+    display: flex;
+    align-items: center;
+    margin-left: -10px;
+}
+
+.userInfo{
+    color: var(--white);
+}
+
+.userName{
+    font-weight: 700;
+}
+
+.userRole{
+    margin-top: 2px;
+    font-weight: 400;
+}
