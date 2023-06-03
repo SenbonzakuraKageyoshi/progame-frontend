@@ -9,20 +9,19 @@ import { useAppSelector } from '../../redux/redux-hooks';
 import styles from './aside.module.scss';
 import { user } from '../../redux/selectors';
 import SmallLoader from '../SmallLoader/SmallLoader';
+import { User as UserType } from '../../types/user';
+import { Status } from '../../types/status';
 
 interface IAside {
     isOpened: boolean;
     setIsOpened: Dispatch<SetStateAction<boolean>>;
     currentLocation: CurrentLocation;
     setCurrentLocation: Dispatch<SetStateAction<CurrentLocation>>;
+    data: UserType;
+    status: Status 
 }
 
-const Aside = ({ isOpened, setIsOpened, currentLocation, setCurrentLocation }: IAside) => {
-
-  const { data, status } = useAppSelector(user);
-
-  console.log(data)
-
+const Aside = ({ isOpened, setIsOpened, currentLocation, setCurrentLocation, data, status }: IAside) => {
   return (
     <div className={isOpened ? styles.asideActive : styles.aside}>
         <Logo />
@@ -35,8 +34,8 @@ const Aside = ({ isOpened, setIsOpened, currentLocation, setCurrentLocation }: I
         ?
         <>
         <div className={styles.asideMain}>
-            <User />
-            <Navigation currentLocation={currentLocation} setCurrentLocation={setCurrentLocation}/>
+            <User firstName={data.firstName} lastName={data.lastName} patronymic={data.patronymic} role={data.role}/>
+            <Navigation userRole={data.role} currentLocation={currentLocation} setCurrentLocation={setCurrentLocation}/>
             <LogoutButton />
         </div>
         {isOpened && <img src={arrow} alt="Закрыть" className={styles.arrow} width={20} height={20} onClick={() => setIsOpened((prev) => !prev)}/>}

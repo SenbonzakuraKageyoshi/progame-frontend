@@ -1,6 +1,7 @@
 import React, { SetStateAction, Dispatch } from 'react'
 import { CurrentLocation } from '../../types/currentLocation';
 import styles from './navigation.module.scss'
+import { Role } from '../../types/role';
 
 const studentNavigation = [
   {id: 1, name: 'Мои курсы'},
@@ -18,9 +19,10 @@ const adminNavigation = [
 interface INavigation {
   currentLocation: CurrentLocation;
   setCurrentLocation: Dispatch<SetStateAction<CurrentLocation>>;
+  userRole: Role;
 }
 
-const Navigation = ({ currentLocation, setCurrentLocation }: INavigation) => {
+const Navigation = ({ currentLocation, setCurrentLocation, userRole }: INavigation) => {
 
   const onClickHandler = (location: CurrentLocation) => {
     localStorage.setItem('progame-location', JSON.stringify(location));
@@ -29,20 +31,28 @@ const Navigation = ({ currentLocation, setCurrentLocation }: INavigation) => {
 
   return (
     <nav className={styles.navigation}>
-        {studentNavigation.map((el) => (
+        {
+        userRole === 'student'
+        &&
+        studentNavigation.map((el) => (
           el.id === currentLocation.id
           ?
           <button className={styles.navItemActive} key={el.id}>{el.name}</button>
           :
           <button className={styles.navItem} key={el.id} onClick={() => onClickHandler(el)}>{el.name}</button>
-        ))}
-        {adminNavigation.map((el) => (
+        ))
+        }
+        {
+        userRole === 'admin'
+        &&
+        adminNavigation.map((el) => (
           el.id === currentLocation.id
           ?
           <button className={styles.navItemActive} key={el.id}>{el.name}</button>
           :
           <button className={styles.navItem} key={el.id} onClick={() => onClickHandler(el)}>{el.name}</button>
-        ))}
+        ))
+        }
     </nav>
   )
 }

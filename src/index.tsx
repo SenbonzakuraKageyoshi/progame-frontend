@@ -9,6 +9,8 @@ import Login from './Pages/Login/Login';
 import CreateUser from './Pages/CreateUser/CreateUser';
 import { getMe } from './redux/userSlice/userSlice';
 import { getToken } from './utils/token';
+import EditUser from './Pages/EditUser/EditUser';
+import CourseCreate from './Pages/CourseCreate/CourseCreate';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -30,7 +32,15 @@ const router = createBrowserRouter([
   {
     path: '/admins/create',
     element: <CreateUser type="admin"/>
-  }
+  },
+  {
+    path: '/users/edit/:id',
+    element: <EditUser />
+  },
+  {
+    path: '/courses/create',
+    element: <CourseCreate />
+  },
 ]);
 
 if(getToken()){

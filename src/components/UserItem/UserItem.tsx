@@ -1,28 +1,23 @@
 import React from 'react'
+import { User } from '../../types/user'
 
-const UserItem = () => {
+const UserItem = (props: Omit<User, 'accessToken' | 'passwordHash' | 'updatedAt'>) => {
   return (
     <div className="card">
-        <div className="cardName">Иванов Иван Иванович</div>
+        <div className="cardName">{props.lastName} {props.firstName} {props.patronymic}</div>
         <ul className="cardItemsList">
             <li>
-                Статус: <div>Не начат</div>
+                Email: {props.email}
             </li>
             <li>
-                Статус: <div>Не начат</div>
+                Телефон: {props.telephone}
             </li>
             <li>
-                Статус: <div>Иванов Иван Иванович</div>
-            </li>
-            <li>
-                Статус: <div>Не начат</div>
-            </li>
-            <li>
-                Статус: <div>Не начат</div>
+                Дата регистрации: <div>{new Date(props.createdAt).toLocaleDateString()}</div>
             </li>
         </ul>
-        <a href="" className="cardButton">Подать заявку</a>
-        <a href="" className="cardButton">Расписание</a>
+        <a href={`/users/edit/${props.id}`} className="cardButton">Редактировать</a>
+        <a href="" className="cardButton" style={{background: 'var(--red)'}}>Удалить</a>
     </div>
   )
 }
