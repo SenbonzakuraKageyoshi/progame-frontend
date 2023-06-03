@@ -10,8 +10,9 @@ const studentNavigation = [
 
 const adminNavigation = [
   {id: 4, name: 'Студенты'},
-  {id: 5, name: 'Курсы'},
-  {id: 6, name: 'Заявки'},
+  {id: 5, name: 'Администраторы'},
+  {id: 6, name: 'Курсы'},
+  {id: 7, name: 'Заявки'},
 ] as const;
 
 interface INavigation {
@@ -29,6 +30,13 @@ const Navigation = ({ currentLocation, setCurrentLocation }: INavigation) => {
   return (
     <nav className={styles.navigation}>
         {studentNavigation.map((el) => (
+          el.id === currentLocation.id
+          ?
+          <button className={styles.navItemActive} key={el.id}>{el.name}</button>
+          :
+          <button className={styles.navItem} key={el.id} onClick={() => onClickHandler(el)}>{el.name}</button>
+        ))}
+        {adminNavigation.map((el) => (
           el.id === currentLocation.id
           ?
           <button className={styles.navItemActive} key={el.id}>{el.name}</button>
