@@ -1,12 +1,21 @@
-import React from 'react'
+import React, { SetStateAction, Dispatch } from 'react'
 import { Course } from '../../types/course'
 import { Role } from '../../types/role'
+import { removeCourse } from '../../services/courseService'
+import { StudentCourse } from '../../types/studentCourse'
 
 type ICourseItem = {
-    role: Role
+    role: Role;
+    setCourses?: Dispatch<SetStateAction<null | Course[] | StudentCourse[]>>;
 } & Omit<Course, 'updatedAt'>
 
 const CourseItem = (props: ICourseItem) => {
+
+    const onRemoveHndler = () => {
+        removeCourse(props.id);
+        props.setCourses!((prev) => (prev! as Course[]).filter((el) => el.id !== props.id))
+    }
+
   return (
     <div className="card">
         <div className="cardName">{props.name}</div>
@@ -35,7 +44,7 @@ const CourseItem = (props: ICourseItem) => {
         <>
         <a href={`/courses/connect/${props.id}`} className="cardButton" style={{fontSize: '11px'}}>Добавить студента</a>
         <a href={`/courses/edit/${props.id}`} className="cardButton">Редактировать</a>
-        <a href="" className="cardButton" style={{background: 'var(--red)'}}>Удалить</a>
+        <button  onClick={onRemoveHndler} className="cardButton" style={{background: 'var(--red)'}}>Удалить</button>
         </>
         }
     </div>

@@ -55,6 +55,7 @@ const Users = ({ type, currentUserId }: IUsers) => {
     <div className="list">
         {users.map((el) => (
           <UserItem
+          setUsers={setUsers}
             firstName={el.firstName}
             lastName={el.lastName}
             patronymic={el.patronymic}

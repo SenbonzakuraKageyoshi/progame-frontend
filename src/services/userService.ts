@@ -25,9 +25,14 @@ const editUser = async (payload: Omit<User, 'accessToken' | 'passwordHash' | 'cr
     await authApi.post<{message: string}>(`/${namespace}/edit-user`, payload);
 };
 
+const removeUser = async (id: number) => {
+    await authApi.post<{message: string}>(`/${namespace}/remove-user`, { id });
+};
+
 export {
     createUser,
     getUsers,
     getUser,
-    editUser
+    editUser,
+    removeUser
 }

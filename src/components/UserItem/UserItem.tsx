@@ -1,7 +1,18 @@
-import React from 'react'
+import React, { SetStateAction, Dispatch } from 'react'
 import { User } from '../../types/user'
+import { removeUser } from '../../services/userService'
 
-const UserItem = (props: Omit<User, 'accessToken' | 'passwordHash' | 'updatedAt'>) => {
+type IUserItem = {
+    setUsers: Dispatch<SetStateAction<null | Omit<User, 'accessToken'>[]>>;
+} & Omit<User, 'accessToken' | 'passwordHash' | 'updatedAt'>
+
+const UserItem = (props: IUserItem) => {
+
+    const onRemoveHandler = () => {
+        removeUser(props.id);
+        props.setUsers((prev) => prev!.filter((el) => el.id !== props.id))
+    }
+
   return (
     <div className="card">
         <div className="cardName">{props.lastName} {props.firstName} {props.patronymic}</div>
@@ -17,7 +28,7 @@ const UserItem = (props: Omit<User, 'accessToken' | 'passwordHash' | 'updatedAt'
             </li>
         </ul>
         <a href={`/users/edit/${props.id}`} className="cardButton">Редактировать</a>
-        <a href="" className="cardButton" style={{background: 'var(--red)'}}>Удалить</a>
+        <button className="cardButton" style={{background: 'var(--red)'}} onClick={onRemoveHandler}>Удалить</button>
     </div>
   )
 }

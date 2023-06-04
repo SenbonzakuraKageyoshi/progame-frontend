@@ -10,11 +10,18 @@ const createCourse = async (payload: CourseFormValues & { shedule: null | string
     await authApi.post<Course>(`/${namespace}/create`, payload);
 };
 
-const getCourses = async (role: Role): Promise<Course[]> => {
-    const { data } = await authApi.post<Course[]>(`/${namespace}/get-courses`, { role });
+const getCourses = async (role: Role, id: number | undefined | null): Promise<Course[]> => {
+    const { data } = await authApi.post<Course[]>(`/${namespace}/get-courses`, { role, id });
 
     return data
 };
+
+const getMyCourses = async (id: number): Promise<StudentCourse[]> => {
+    const { data } = await authApi.post<StudentCourse[]>(`/${namespace}/get-my-courses`, { id });
+
+    return data
+};
+
 
 const getCourse = async (id: number): Promise<Course> => {
     const { data } = await authApi.post<Course>(`/${namespace}/get-course`, { id });
@@ -40,6 +47,10 @@ const removeStudentToCourse = async (UserId: number, CourseId: number) => {
     await authApi.post<{message: string}>(`/${namespace}/remove-student`, { UserId, CourseId });
 };
 
+const removeCourse = async (id: number) => {
+    await authApi.post<{message: string}>(`/${namespace}/remove-course`, { id });
+};
+
 export {
     createCourse,
     getCourses,
@@ -47,5 +58,7 @@ export {
     editCourse,
     getStudentCourse,
     addStudentToCourse,
-    removeStudentToCourse
+    removeStudentToCourse,
+    removeCourse,
+    getMyCourses
 }

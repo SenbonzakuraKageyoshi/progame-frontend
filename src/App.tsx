@@ -38,11 +38,11 @@ const App = () => {
         <div className={asideIsOpened ? 'mainContentActive' : 'mainContent'}>
           <div className="container">
             <PageTitle title={currentLocation.name}/>
-            {currentLocation.id === 1 && <MyCourseItem />}
-            {currentLocation.id === 2 && <Courses role='student' />}
+            {currentLocation.id === 1 && <Courses role='student' type='my' currentUserId={data.id} />}
+            {currentLocation.id === 2 && <Courses role='student' type='all' currentUserId={data.id} />}
             {currentLocation.id === 4 && <Users type='student' />}
             {currentLocation.id === 5 && <Users type='admin' currentUserId={data.id}/>}
-            {currentLocation.id === 6 && <Courses role='admin' />}
+            {currentLocation.id === 6 && <Courses role='admin' type='all' />}
           </div>
         </div>
       </div>

@@ -100,12 +100,12 @@ const CourseConnect = () => {
                                 &&
                                 <>
                                 <p>Статус: Не добавлен</p>
-                                <button className="actionButton">Добавить</button>
+                                <button className="actionButton" onClick={() => onAddHandler(el.id)}>Добавить</button>
                                 </>
                                 }
                                 {
-                                addedStudents.length > 0
-                                &&
+                                addedStudents.length !== 0
+                                ?
                                 addedStudents.includes(el.id)
                                 ?
                                     <>
@@ -117,6 +117,8 @@ const CourseConnect = () => {
                                     <p>Статус: Не добавлен</p>
                                     <button className="actionButton" onClick={() => onAddHandler(el.id)}>Добавить</button>
                                     </>
+                                :
+                                null
                                 }
                             </li>
                         ))}
