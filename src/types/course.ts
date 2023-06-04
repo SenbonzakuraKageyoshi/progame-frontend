@@ -1,6 +1,9 @@
+export type CourseStatus = 'Начат' | 'Завершен' | 'Не начат';
+
 export interface Course {
     id: number;
     name: string;
+    status: CourseStatus;
     teacher: string;
     shedule: string | null;
     price: string;

@@ -13,7 +13,7 @@ const UserItem = (props: Omit<User, 'accessToken' | 'passwordHash' | 'updatedAt'
                 Телефон: {props.telephone}
             </li>
             <li>
-                Дата регистрации: <div>{new Date(props.createdAt).toLocaleDateString()}</div>
+                Дата регистрации: {new Date(props.createdAt).toLocaleDateString()}
             </li>
         </ul>
         <a href={`/users/edit/${props.id}`} className="cardButton">Редактировать</a>

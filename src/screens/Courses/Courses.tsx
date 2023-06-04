@@ -50,6 +50,7 @@ const Courses = ({ role }: ICourses) => {
               <CourseItem
               id={el.id}
               name={el.name}
+              status={el.status}
               price={el.price}
               description={el.price}
               shedule={el.shedule}

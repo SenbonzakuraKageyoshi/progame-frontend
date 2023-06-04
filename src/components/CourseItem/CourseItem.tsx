@@ -12,6 +12,9 @@ const CourseItem = (props: ICourseItem) => {
         <div className="cardName">{props.name}</div>
         <ul className="cardItemsList">
             <li>
+                Статус: {props.status}
+            </li>
+            <li>
                 Преподаватель: {props.teacher}
             </li>
             <li>
@@ -30,8 +33,8 @@ const CourseItem = (props: ICourseItem) => {
         props.role === 'admin'
         &&
         <>
-        <a href="" className="cardButton" style={{fontSize: '11px'}}>Добавить студента</a>
-        <a href="" className="cardButton">Редактировать</a>
+        <a href={`/courses/connect/${props.id}`} className="cardButton" style={{fontSize: '11px'}}>Добавить студента</a>
+        <a href={`/courses/edit/${props.id}`} className="cardButton">Редактировать</a>
         <a href="" className="cardButton" style={{background: 'var(--red)'}}>Удалить</a>
         </>
         }
