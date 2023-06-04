@@ -5,6 +5,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { StudentFromValues } from '../../types/studentFormValues';
 import { createUser } from '../../services/userService';
 import { Role } from '../../types/role';
+import { useAppSelector } from '../../redux/redux-hooks';
+import { user } from '../../redux/selectors';
 
 const studentInputs = [
   {id: 1, name: 'firstName', label: 'Имя', type: 'text'},
@@ -20,6 +22,20 @@ interface ICreateUser {
 }
 
 const CreateUser = ({ type }: ICreateUser) => {
+
+  const { data, status } = useAppSelector(user);
+
+  React.useEffect(() => {
+    if(!data && status === 'idle'){
+      window.location.href = '/login'
+    }else if(!data && status === 'rejected'){
+      window.location.href = '/login'
+    }else if(data && status == 'fulfilled'){
+      if(data.role === 'student'){
+        window.location.href = '/'
+      }
+    }
+  }, [data, status ])
 
     const [processMessage, setProcessMessage] = React.useState<null | string>(null);
 

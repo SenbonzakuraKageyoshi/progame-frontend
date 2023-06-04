@@ -6,8 +6,24 @@ import { getUsers } from '../../services/userService';
 import BigLoader from '../../components/BigLoader/BigLoader';
 import { User } from '../../types/user';
 import { addStudentToCourse, removeStudentToCourse } from '../../services/courseService';
+import { useAppSelector } from '../../redux/redux-hooks';
+import { user } from '../../redux/selectors';
 
 const CourseMembers = () => {
+
+    const { data, status } = useAppSelector(user);
+
+  React.useEffect(() => {
+    if(!data && status === 'idle'){
+      window.location.href = '/login'
+    }else if(!data && status === 'rejected'){
+      window.location.href = '/login'
+    }else if(data && status == 'fulfilled'){
+      if(data.role === 'student'){
+        window.location.href = '/'
+      }
+    }
+  }, [data, status ])
     
     const [students, setStudents] = React.useState<null | Omit<User, 'accessToken'>[]>(null);
     const [addedStudents, setAddedStudents] = React.useState<number[]>([]);

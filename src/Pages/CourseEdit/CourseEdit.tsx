@@ -8,6 +8,8 @@ import { Role } from '../../types/role';
 import { Course } from '../../types/course';
 import BigLoader from '../../components/BigLoader/BigLoader';
 import { uploadShedule } from '../../services/uploadsService';
+import { useAppSelector } from '../../redux/redux-hooks';
+import { user } from '../../redux/selectors';
 
 const studentInputs = [
   {id: 1, name: 'name', label: 'Название курса', type: 'text'},
@@ -17,6 +19,20 @@ const studentInputs = [
 ] as const;
 
 const CourseEdit = () => {
+
+  const { data, status } = useAppSelector(user);
+
+  React.useEffect(() => {
+    if(!data && status === 'idle'){
+      window.location.href = '/login'
+    }else if(!data && status === 'rejected'){
+      window.location.href = '/login'
+    }else if(data && status == 'fulfilled'){
+      if(data.role === 'student'){
+        window.location.href = '/'
+      }
+    }
+  }, [data, status ])
 
     const [course, setCourse] = React.useState<null | Course>(null);
 

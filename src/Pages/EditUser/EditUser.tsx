@@ -7,6 +7,8 @@ import { editUser } from '../../services/userService';
 import { getUser } from '../../services/userService';
 import { User } from '../../types/user';
 import BigLoader from '../../components/BigLoader/BigLoader';
+import { useAppSelector } from '../../redux/redux-hooks';
+import { user as userSelector } from '../../redux/selectors';
 
 const studentInputs = [
   {id: 1, name: 'firstName', label: 'Имя', type: 'text'},
@@ -17,6 +19,20 @@ const studentInputs = [
 ] as const;
 
 const EditUser = () => {
+
+  const { data, status } = useAppSelector(userSelector);
+
+  React.useEffect(() => {
+    if(!data && status === 'idle'){
+      window.location.href = '/login'
+    }else if(!data && status === 'rejected'){
+      window.location.href = '/login'
+    }else if(data && status == 'fulfilled'){
+      if(data.role === 'student'){
+        window.location.href = '/'
+      }
+    }
+  }, [data, status ])
 
     const [user, setUser] = React.useState<null | Omit<User, 'accessToken'>>(null)
 
