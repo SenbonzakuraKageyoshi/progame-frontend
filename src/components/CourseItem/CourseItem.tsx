@@ -4,6 +4,7 @@ import { Role } from '../../types/role'
 import { removeCourse } from '../../services/courseService'
 import { StudentCourse } from '../../types/studentCourse'
 import { createRequest } from '../../services/requestService'
+import { serverUrl } from '../../api/api'
 
 type ICourseItem = {
     courseHaveRequest?: boolean;
@@ -12,6 +13,7 @@ type ICourseItem = {
     telephone: string;
     email: string;
     setCourses?: Dispatch<SetStateAction<null | Course[] | StudentCourse[]>>;
+    userFullName: string;
 } & Omit<Course, 'updatedAt'>
 
 const CourseItem = (props: ICourseItem) => {
@@ -24,7 +26,7 @@ const CourseItem = (props: ICourseItem) => {
     };
 
     const onRequestCreateHandler = () => {
-        createRequest({UserId: props.UserId, CourseId: props.id, telephone: props.telephone, email: props.email, text: `Заявка на участие в курсе '${props.name}'`})
+        createRequest({UserId: props.UserId, CourseId: props.id, telephone: props.telephone, email: props.email, text: `Заявка на участие в курсе '${props.name}'`, authorName: props.userFullName})
         .then(() => setHaveRequest(true))
     }
 
@@ -49,14 +51,14 @@ const CourseItem = (props: ICourseItem) => {
             </li>
         </ul>
         {props.role === 'student' ? haveRequest ? <button className="cardButton" style={{fontSize: '11px', background: 'var(--red)'}}>Заявка отправлена</button> : <button className="cardButton" onClick={onRequestCreateHandler}>Подать заявку</button> : null}
-        {props.shedule ? <a href="" className="cardButton">Расписание</a> : <button className="cardButton" style={{fontSize: '11px'}}>Расписание не готово</button>}
+        {props.shedule ? <a href={`${serverUrl}/static/shedules/${props.shedule}`} download className="cardButton">Расписание</a> : <button className="cardButton" style={{fontSize: '11px'}}>Расписание не готово</button>}
         {
         props.role === 'admin'
         &&
         <>
         <a href={`/courses/members/${props.id}`} className="cardButton" style={{fontSize: '11px'}}>Участники курса</a>
         <a href={`/courses/edit/${props.id}`} className="cardButton">Редактировать</a>
-        <button  onClick={onRemoveHndler} className="cardButton" style={{background: 'var(--red)'}}>Удалить</button>
+        <button onClick={onRemoveHndler} className="cardButton" style={{background: 'var(--red)'}}>Удалить</button>
         </>
         }
     </div>

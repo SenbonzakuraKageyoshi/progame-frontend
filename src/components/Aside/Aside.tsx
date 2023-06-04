@@ -36,7 +36,7 @@ const Aside = ({ isOpened, setIsOpened, currentLocation, setCurrentLocation, dat
         <div className={styles.asideMain}>
             <User firstName={data.firstName} lastName={data.lastName} patronymic={data.patronymic} role={data.role}/>
             <Navigation userRole={data.role} currentLocation={currentLocation} setCurrentLocation={setCurrentLocation}/>
-            <LogoutButton />
+            <LogoutButton currentUserId={data.id}/>
         </div>
         {isOpened && <img src={arrow} alt="Закрыть" className={styles.arrow} width={20} height={20} onClick={() => setIsOpened((prev) => !prev)}/>}
         </>

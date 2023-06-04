@@ -3,6 +3,7 @@ export type RequestStatus = 'На рассмотрении' | 'Принята' |
 export interface Request {
     id: number;
     text: string;
+    authorName: string;
     status: RequestStatus;
     createdAt: string;
     updatedAt: string;

@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { CourseFormValues } from '../../types/courseFormValues';
 import { createCourse } from '../../services/courseService';
 import { Role } from '../../types/role';
+import { uploadShedule } from '../../services/uploadsService';
 
 const studentInputs = [
   {id: 1, name: 'name', label: 'Название курса', type: 'text'},
@@ -15,11 +16,44 @@ const studentInputs = [
 
 const CourseCreate = () => {
 
+    const inputSheduleRef = React.useRef<HTMLInputElement>(null);
+
     const [processMessage, setProcessMessage] = React.useState<null | string>(null);
+    const [sheduleIsLoading, setSheduleIsLoading] = React.useState(false);
 
     const [shedule, setShedule] = React.useState<null | string>(null);
 
     const { register, formState: { errors }, handleSubmit } = useForm<CourseFormValues>({ mode: 'onTouched'});
+
+    const handleChangeShedule = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setProcessMessage(null)
+      try{
+        const formData = new FormData();
+        const file = (e.target as HTMLInputElement).files;
+        
+        if(!file){
+          return
+        };
+
+        formData.append('file', file[0]);
+        formData.append('fileName', file[0].name)
+
+        setSheduleIsLoading(true);
+
+          uploadShedule(formData)
+          .then((data) => {
+              setShedule(data.name);
+              setSheduleIsLoading(false);
+              setProcessMessage('Рапсание загружено');
+          }).catch(() => {
+            setProcessMessage('Ошибка при загрузке документов. Закройте форму и попробуйте снова');
+            setSheduleIsLoading(false);
+          })
+
+      }catch(err){
+          setProcessMessage('Ошибка при загрузке документов. Закройте форму и попробуйте снова');
+        };
+    }
 
     const onSubmitHandler = (data: CourseFormValues) => {
 
@@ -54,6 +88,8 @@ const CourseCreate = () => {
                       {errors.description && <p className='message'>{errors.description?.message}</p>}
                   </div>
                   <FormSubmitButton name="Зарегистрировать"/>
+                  {!shedule && <button onClick={() => inputSheduleRef.current?.click()} type="button" className='uploads-button' disabled={sheduleIsLoading}>Загрузить расписание</button>}
+                  {!sheduleIsLoading && <input type="file" accept=".pdf, .doc, .docx, .rtf, .txt, .pptx, .ppt, .pps, .odp, .zip" multiple onChange={(e) => handleChangeShedule(e)} hidden ref={inputSheduleRef} className="form-input-file"/>}
                   {processMessage && <p className='message'>{processMessage}</p>}
                 </form>
             </div>

@@ -15,15 +15,16 @@ interface ICourses {
     email: string;
     type: 'all' | 'my';
     currentUserId: number;
+    userFullName: string;
 }
 
-const Courses = ({ role, type, currentUserId, telephone, email }: ICourses) => {
+const Courses = ({ userFullName, role, type, currentUserId, telephone, email }: ICourses) => {
 
     const [processMessage, setProcessMessage] = React.useState<null | string>(null);
 
     const [courses, setCourses] = React.useState<null | Course[] | StudentCourse[]>(null);
     const [requests, setRequests] = React.useState<null | Request[]>(null);
-
+    console.log(requests)
     React.useEffect(() => {
         if(type === 'all'){
           getCourses(role, currentUserId)
@@ -44,6 +45,12 @@ const Courses = ({ role, type, currentUserId, telephone, email }: ICourses) => {
           .then((data) => {
               setCourses(data)
           })
+          .catch((data) => {
+            setProcessMessage(data.response.data.message)
+          })
+
+          getRequests(role, currentUserId)
+          .then((data) => setRequests(data))
           .catch((data) => {
             setProcessMessage(data.response.data.message)
           })
@@ -74,9 +81,11 @@ const Courses = ({ role, type, currentUserId, telephone, email }: ICourses) => {
           ?
           <div className="list">
             {(courses as Course[]).map((el) => (
-                requests.find((req) => req.CourseId === el.id) && requests.find((req) => req.CourseId === el.id)?.UserId === currentUserId
+                requests && requests.find((req) => req.CourseId === el.id) && requests.find((req) => req.CourseId === el.id)?.UserId === currentUserId
                 ?
                 <CourseItem
+                  userFullName={userFullName}
+                  key={el.id}
                   courseHaveRequest={true}
                   telephone={telephone}
                   email={email}
@@ -97,6 +106,8 @@ const Courses = ({ role, type, currentUserId, telephone, email }: ICourses) => {
                 />
                 :
                 <CourseItem
+                  userFullName={userFullName}
+                  key={el.id}
                   courseHaveRequest={false}
                   telephone={telephone}
                   email={email}
@@ -121,6 +132,8 @@ const Courses = ({ role, type, currentUserId, telephone, email }: ICourses) => {
           <div className="list">
             {(courses as StudentCourse[]).map((el) => (
               <CourseItem
+              userFullName={userFullName}
+              key={el.Course.id}
               telephone={telephone}
               email={email}
               UserId={currentUserId}

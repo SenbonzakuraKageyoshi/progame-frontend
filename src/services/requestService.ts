@@ -1,4 +1,4 @@
-import { Request } from "../types/request";
+import { Request, RequestStatus } from "../types/request";
 import { authApi } from "../api/api";
 import { Role } from "../types/role";
 
@@ -14,7 +14,17 @@ const getRequests = async (role: Role, id: number): Promise<Request[]> => {
    return data
 };
 
+const editRequestStatus = async (status: RequestStatus, id: number) => {
+    await authApi.post<{message: string}>(`/${namespace}/edit-request`, {id, status});
+};
+
+const removeRequest = async (id: number) => {
+    await authApi.post<{message: string}>(`/${namespace}/remove-request`, {id});
+};
+
 export {
     createRequest,
-    getRequests
+    getRequests,
+    editRequestStatus,
+    removeRequest
 }
