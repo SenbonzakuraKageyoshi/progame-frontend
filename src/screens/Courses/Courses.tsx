@@ -52,12 +52,12 @@ const Courses = ({ role, type, currentUserId }: ICourses) => {
         courses.length === 0
         ?
         <>
-        <ActionLink href="/courses/create" name="Зарегистрировать курс"/>
+        {role === 'admin' && <ActionLink href="/courses/create" name="Зарегистрировать курс"/>}
         <p className='message'>Курсов не существует</p>
         </>
         :
         <>
-        <ActionLink href="/courses/create" name="Зарегистрировать курс"/>
+        {role === 'admin' && <ActionLink href="/courses/create" name="Зарегистрировать курс"/>}
         {
           type === 'all'
           ?

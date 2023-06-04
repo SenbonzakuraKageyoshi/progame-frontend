@@ -90,7 +90,7 @@ const CourseConnect = () => {
                 <div className="formContent">
                     <div className="formName">Добавление / удаление студентов для курса</div>
                     <div className="courseName">{course.name}</div>
-                    {availablePlaces && <div className='placesValue'>Доступных мест: {availablePlaces}</div>}
+                    {availablePlaces ? <div className='placesValue'>Доступных мест: {availablePlaces}</div> : <div className='placesValue'>Все места заняты</div>}
                     <ul className="students">
                         {students.map((el) => (
                             <li className="studentsItem" key={el.id}>
@@ -115,7 +115,13 @@ const CourseConnect = () => {
                                     :   
                                     <>
                                     <p>Статус: Не добавлен</p>
+                                    {
+                                    availablePlaces
+                                    ?
                                     <button className="actionButton" onClick={() => onAddHandler(el.id)}>Добавить</button>
+                                    :
+                                    null
+                                    }
                                     </>
                                 :
                                 null
