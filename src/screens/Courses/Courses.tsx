@@ -6,18 +6,23 @@ import ActionLink from '../../components/ActionLink/ActionLink'
 import { getCourses, getMyCourses } from '../../services/courseService'
 import { Role } from '../../types/role'
 import { StudentCourse } from '../../types/studentCourse'
+import { Request } from '../../types/request'
+import { getRequests } from '../../services/requestService'
 
 interface ICourses {
+    telephone: string;
     role: Role;
+    email: string;
     type: 'all' | 'my';
-    currentUserId?: number;
+    currentUserId: number;
 }
 
-const Courses = ({ role, type, currentUserId }: ICourses) => {
+const Courses = ({ role, type, currentUserId, telephone, email }: ICourses) => {
 
     const [processMessage, setProcessMessage] = React.useState<null | string>(null);
 
-    const [courses, setCourses] = React.useState<null | Course[] | StudentCourse[]>(null)
+    const [courses, setCourses] = React.useState<null | Course[] | StudentCourse[]>(null);
+    const [requests, setRequests] = React.useState<null | Request[]>(null);
 
     React.useEffect(() => {
         if(type === 'all'){
@@ -25,6 +30,12 @@ const Courses = ({ role, type, currentUserId }: ICourses) => {
           .then((data) => {
               setCourses(data)
           })
+          .catch((data) => {
+            setProcessMessage(data.response.data.message)
+          })
+
+          getRequests(role, currentUserId)
+          .then((data) => setRequests(data))
           .catch((data) => {
             setProcessMessage(data.response.data.message)
           })
@@ -42,7 +53,7 @@ const Courses = ({ role, type, currentUserId }: ICourses) => {
     return (
         <>
         {
-        !courses
+        !courses || !requests
         ?
         <>
         <BigLoader />
@@ -63,27 +74,56 @@ const Courses = ({ role, type, currentUserId }: ICourses) => {
           ?
           <div className="list">
             {(courses as Course[]).map((el) => (
-              <CourseItem
-              setCourses={setCourses}
-              id={el.id}
-              name={el.name}
-              status={el.status}
-              price={el.price}
-              description={el.price}
-              shedule={el.shedule}
-              closedPlaces={el.closedPlaces}
-              places={el.places}
-              createdAt={el.createdAt}
-              features={el.features}
-              teacher={el.teacher}
-              role={role}
-              />
+                requests.find((req) => req.CourseId === el.id) && requests.find((req) => req.CourseId === el.id)?.UserId === currentUserId
+                ?
+                <CourseItem
+                  courseHaveRequest={true}
+                  telephone={telephone}
+                  email={email}
+                  UserId={currentUserId}
+                  setCourses={setCourses}
+                  id={el.id}
+                  name={el.name}
+                  status={el.status}
+                  price={el.price}
+                  description={el.price}
+                  shedule={el.shedule}
+                  closedPlaces={el.closedPlaces}
+                  places={el.places}
+                  createdAt={el.createdAt}
+                  features={el.features}
+                  teacher={el.teacher}
+                  role={role}
+                />
+                :
+                <CourseItem
+                  courseHaveRequest={false}
+                  telephone={telephone}
+                  email={email}
+                  UserId={currentUserId}
+                  setCourses={setCourses}
+                  id={el.id}
+                  name={el.name}
+                  status={el.status}
+                  price={el.price}
+                  description={el.price}
+                  shedule={el.shedule}
+                  closedPlaces={el.closedPlaces}
+                  places={el.places}
+                  createdAt={el.createdAt}
+                  features={el.features}
+                  teacher={el.teacher}
+                  role={role}
+                />
             ))}
           </div>
           :
           <div className="list">
             {(courses as StudentCourse[]).map((el) => (
               <CourseItem
+              telephone={telephone}
+              email={email}
+              UserId={currentUserId}
               id={el.CourseId}
               name={el.Course.name}
               status={el.Course.status}

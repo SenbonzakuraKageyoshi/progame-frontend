@@ -7,7 +7,7 @@ import BigLoader from '../../components/BigLoader/BigLoader';
 import { User } from '../../types/user';
 import { addStudentToCourse, removeStudentToCourse } from '../../services/courseService';
 
-const CourseConnect = () => {
+const CourseMembers = () => {
     
     const [students, setStudents] = React.useState<null | Omit<User, 'accessToken'>[]>(null);
     const [addedStudents, setAddedStudents] = React.useState<number[]>([]);
@@ -85,7 +85,7 @@ const CourseConnect = () => {
     )
   }else{
     return (
-        <div className="courseConnect">
+        <div className="CourseMembers">
             <div className="container">
                 <div className="formContent">
                     <div className="formName">Добавление / удаление студентов для курса</div>
@@ -137,4 +137,4 @@ const CourseConnect = () => {
   }
 }
 
-export default CourseConnect
+export default CourseMembers

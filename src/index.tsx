@@ -12,7 +12,7 @@ import { getToken } from './utils/token';
 import EditUser from './Pages/EditUser/EditUser';
 import CourseCreate from './Pages/CourseCreate/CourseCreate';
 import CourseEdit from './Pages/CourseEdit/CourseEdit';
-import CourseConnect from './Pages/CourseConnect/CourseConnect';
+import CourseMembers from './Pages/CourseMembers/CourseMembers';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -48,8 +48,8 @@ const router = createBrowserRouter([
     element: <CourseEdit />
   },
   {
-    path: '/courses/connect/:id',
-    element: <CourseConnect />
+    path: '/courses/members/:id',
+    element: <CourseMembers />
   },
 ]);
 
