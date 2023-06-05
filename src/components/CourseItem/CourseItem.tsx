@@ -47,6 +47,12 @@ const CourseItem = (props: ICourseItem) => {
                 Осталось мест: {props.places - props.closedPlaces}
             </li>
             <li>
+                Дата начала: {props.dateStart}
+            </li>
+            <li>
+                Дата окнчания: {props.dateEnd}
+            </li>
+            <li>
                 Цена: {props.price} руб
             </li>
         </ul>

@@ -13,4 +13,6 @@ export interface Course {
     places: number;
     createdAt: string;
     updatedAt: string;
+    dateStart: string;
+    dateEnd: string;
 }

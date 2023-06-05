@@ -6,4 +6,6 @@ export interface CourseFormValues {
     features: string;
     description: string;
     places: number;
+    dateStart: string;
+    dateEnd: string;
 }

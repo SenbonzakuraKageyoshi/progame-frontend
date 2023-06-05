@@ -43,6 +43,12 @@ const CourseDetails = () => {
               <li className="courseDetailsListItem">
                 Занято мест: {course.closedPlaces}
               </li>
+              <li className="courseDetailsListItem">
+                Дата начала: {course.dateStart}
+              </li>
+              <li className="courseDetailsListItem">
+                Дата окончания: {course.dateEnd}
+              </li>
             </ul>
             <p className="courseDescription">Описание: {course.description}</p>
             <ul className="courseFeatures">

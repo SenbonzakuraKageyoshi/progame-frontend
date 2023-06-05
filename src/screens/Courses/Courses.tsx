@@ -84,6 +84,8 @@ const Courses = ({ userFullName, role, type, currentUserId, telephone, email }: 
                 requests && requests.find((req) => req.CourseId === el.id) && requests.find((req) => req.CourseId === el.id)?.UserId === currentUserId
                 ?
                 <CourseItem
+                  dateStart={el.dateStart}
+                  dateEnd={el.dateEnd}
                   userFullName={userFullName}
                   key={el.id}
                   courseHaveRequest={true}
@@ -106,6 +108,8 @@ const Courses = ({ userFullName, role, type, currentUserId, telephone, email }: 
                 />
                 :
                 <CourseItem
+                  dateStart={el.dateStart}
+                  dateEnd={el.dateEnd}
                   userFullName={userFullName}
                   key={el.id}
                   courseHaveRequest={false}
@@ -132,6 +136,8 @@ const Courses = ({ userFullName, role, type, currentUserId, telephone, email }: 
           <div className="list">
             {(courses as StudentCourse[]).map((el) => (
               <CourseItem
+              dateStart={el.Course.dateStart}
+              dateEnd={el.Course.dateEnd}
               userFullName={userFullName}
               key={el.Course.id}
               telephone={telephone}

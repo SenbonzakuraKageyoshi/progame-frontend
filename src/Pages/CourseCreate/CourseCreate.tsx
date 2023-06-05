@@ -14,6 +14,8 @@ const studentInputs = [
   {id: 2, name: 'price', label: 'Цена', type: 'number'},
   {id: 3, name: 'places', label: 'Количество мест', type: 'number'},
   {id: 4, name: 'teacher', label: 'Преподаватель', type: 'text'},
+  {id: 5, name: 'dateStart', label: 'Дата начала', type: 'date'},
+  {id: 6, name: 'dateEnd', label: 'Дата окончания', type: 'date'},
 ] as const;
 
 const CourseCreate = () => {
