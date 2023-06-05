@@ -10,6 +10,7 @@
 
 .message{
     color: var(--red);
+    max-width: 300px;
 }
 
 *{
@@ -30,6 +31,20 @@
     padding: 15px 0px;
     margin-left: 300px; 
     transition: margin-left 0.4s;
+}
+
+@media(max-width: 650px){
+  .mainContent{
+    padding: 15px 0px;
+    margin-left: 60px;
+    transition: margin-left 0.4s; 
+}
+
+.mainContentActive{
+    padding: 15px 0px;
+    margin-left: 60px; 
+    transition: margin-left 0.4s;
+}
 }
 
 .card{

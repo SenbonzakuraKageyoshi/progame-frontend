@@ -10,13 +10,13 @@ const createUser = async (payload: StudentFromValues) => {
 };
 
 const getUsers = async (type: Role): Promise<Omit<User, 'accessToken'>[]> => {
-    const { data } = await authApi.post<User[]>(`/${namespace}/get-users`, { type });
+    const { data } = await authApi.get<User[]>(`/${namespace}/get-users?type=${type}`);
 
     return data
 };
 
 const getUser = async (id: number): Promise<Omit<User, 'accessToken'>> => {
-    const { data } = await authApi.post<User>(`/${namespace}/get-user`, { id });
+    const { data } = await authApi.get<User>(`/${namespace}/get-user?id=${id}`);
 
     return data
 };

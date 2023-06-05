@@ -50,6 +50,8 @@ const CourseItem = (props: ICourseItem) => {
                 Цена: {props.price} руб
             </li>
         </ul>
+        <a href={`/courses/details/${props.id}`} className="cardButton">Подробнее</a>
+        <a href={`/courses/members/${props.id}`} className="cardButton" style={{fontSize: '11px'}}>Участники курса</a>
         {props.role === 'student' ? haveRequest ? <button className="cardButton" style={{fontSize: '11px', background: 'var(--red)'}}>Заявка отправлена</button> : <button className="cardButton" onClick={onRequestCreateHandler}>Подать заявку</button> : null}
         {props.shedule ? <a href={`${serverUrl}/static/shedules/${props.shedule}`} download className="cardButton">Расписание</a> : <button className="cardButton" style={{fontSize: '11px'}}>Расписание не готово</button>}
         {

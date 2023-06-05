@@ -13,6 +13,7 @@ import EditUser from './Pages/EditUser/EditUser';
 import CourseCreate from './Pages/CourseCreate/CourseCreate';
 import CourseEdit from './Pages/CourseEdit/CourseEdit';
 import CourseMembers from './Pages/CourseMembers/CourseMembers';
+import CourseDetails from './Pages/CourseDetails/CourseDetails';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
   {
     path: '/courses/members/:id',
     element: <CourseMembers />
+  },
+  {
+    path: '/courses/details/:id',
+    element: <CourseDetails />
   },
 ]);
 
