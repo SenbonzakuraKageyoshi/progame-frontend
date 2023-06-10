@@ -7,6 +7,8 @@ import { createUser } from '../../services/userService';
 import { Role } from '../../types/role';
 import { useAppSelector } from '../../redux/redux-hooks';
 import { user } from '../../redux/selectors';
+import BackLink from '../../components/BackLink/BackLink';
+import * as yup from "yup";
 
 const studentInputs = [
   {id: 1, name: 'firstName', label: 'Имя', type: 'text'},
@@ -16,6 +18,15 @@ const studentInputs = [
   {id: 5, name: 'telephone', label: 'Номер телефона (начиная с 8)', type: 'number'},
   {id: 6, name: 'password', label: 'Пароль', type: 'password'},
 ] as const;
+
+const validationSchema = yup.object({
+  firstName: yup.string().required('Поле обязательно к заполнению'),
+  lastName: yup.string().required('Поле обязательно к заполнению'),
+  patronymic: yup.string().required('Поле обязательно к заполнению'),
+  email: yup.string().email('Введите корректную почту').required('Поле обязательно к заполнению'),
+  telephone: yup.string().required('Поле обязательно к заполнению').min(11, 'Номер состоит из 11 цифр, начиная с 8').max(11, 'Номер состоит из 11 цифр, начиная с 8'),
+  password: yup.string().required('Поле обязательно к заполнению').min(8, 'Пароль должен содержать минимум 8 символов')
+}).required();
 
 interface ICreateUser {
   type: Role
@@ -39,7 +50,7 @@ const CreateUser = ({ type }: ICreateUser) => {
 
     const [processMessage, setProcessMessage] = React.useState<null | string>(null);
 
-    const { register, formState: { errors }, handleSubmit } = useForm<StudentFromValues>({ mode: 'onTouched'});
+    const { register, formState: { errors }, handleSubmit } = useForm<StudentFromValues>({ mode: 'onTouched', resolver: yupResolver(validationSchema)});
 
     const onSubmitHandler = (data: StudentFromValues) => {
 
@@ -53,6 +64,7 @@ const CreateUser = ({ type }: ICreateUser) => {
   return (
     <div className="studentForm">
         <div className="container">
+            <BackLink />
             <div className="formContent">
                 <div className="formName">Регистрация {type === 'admin' ? 'администратора' : 'студента'}</div>
                 <form className="loginForm" onSubmit={handleSubmit(onSubmitHandler)}>

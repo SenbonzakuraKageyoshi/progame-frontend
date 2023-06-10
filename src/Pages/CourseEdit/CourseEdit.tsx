@@ -10,6 +10,8 @@ import BigLoader from '../../components/BigLoader/BigLoader';
 import { uploadShedule } from '../../services/uploadsService';
 import { useAppSelector } from '../../redux/redux-hooks';
 import { user } from '../../redux/selectors';
+import BackLink from '../../components/BackLink/BackLink';
+import * as yup from 'yup'
 
 const studentInputs = [
   {id: 1, name: 'name', label: 'Название курса', type: 'text'},
@@ -19,6 +21,17 @@ const studentInputs = [
   {id: 5, name: 'dateStart', label: 'Дата начала', type: 'date'},
   {id: 6, name: 'dateEnd', label: 'Дата окончания', type: 'date'},
 ] as const;
+
+const validationSchema = yup.object({
+  name: yup.string().required('Поле обязательно к заполнению'),
+  price: yup.string().required('Поле обязательно к заполнению').test('value', 'Значение должно быть больше 0', val => !isNaN(Number(val)) && Number(val) > 0),
+  places: yup.string().required('Поле обязательно к заполнению').test('value', 'Значение должно быть больше 0', val => !isNaN(Number(val)) && Number(val) > 0),
+  teacher: yup.string().required('Поле обязательно к заполнению'),
+  dateStart: yup.string().required('Поле обязательно к заполнению'),
+  dateEnd: yup.string().required('Поле обязательно к заполнению'),
+  description: yup.string().required('Поле обязательно к заполнению'),
+  features: yup.string().required('Поле обязательно к заполнению'),
+}).required();
 
 const CourseEdit = () => {
 
@@ -45,7 +58,7 @@ const CourseEdit = () => {
 
     const [shedule, setShedule] = React.useState<null | string>(null);
 
-    const { register, formState: { errors }, handleSubmit } = useForm<CourseFormValues & { status: string }>({ mode: 'onTouched'});
+    const { register, formState: { errors }, handleSubmit } = useForm<CourseFormValues & { status: string }>({ mode: 'onTouched', resolver: yupResolver(validationSchema)});
 
     React.useEffect(() => {
         getCourse(Number(window.location.pathname.replace(/[^+\d]/g, '')))
@@ -99,6 +112,7 @@ const CourseEdit = () => {
   if(course){
     return (
         <div className="studentForm">
+            <BackLink />
             <div className="container">
                 <div className="formContent">
                     <div className="formName">Редактирование курса</div>

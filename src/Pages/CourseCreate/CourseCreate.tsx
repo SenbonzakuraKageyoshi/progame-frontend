@@ -8,6 +8,8 @@ import { Role } from '../../types/role';
 import { uploadShedule } from '../../services/uploadsService';
 import { useAppSelector } from '../../redux/redux-hooks';
 import { user } from '../../redux/selectors';
+import BackLink from '../../components/BackLink/BackLink';
+import * as yup from "yup";
 
 const studentInputs = [
   {id: 1, name: 'name', label: 'Название курса', type: 'text'},
@@ -17,6 +19,17 @@ const studentInputs = [
   {id: 5, name: 'dateStart', label: 'Дата начала', type: 'date'},
   {id: 6, name: 'dateEnd', label: 'Дата окончания', type: 'date'},
 ] as const;
+
+const validationSchema = yup.object({
+  name: yup.string().required('Поле обязательно к заполнению'),
+  price: yup.string().required('Поле обязательно к заполнению').test('value', 'Значение должно быть больше 0', val => !isNaN(Number(val)) && Number(val) > 0),
+  places: yup.string().required('Поле обязательно к заполнению').test('value', 'Значение должно быть больше 0', val => !isNaN(Number(val)) && Number(val) > 0),
+  teacher: yup.string().required('Поле обязательно к заполнению'),
+  dateStart: yup.string().required('Поле обязательно к заполнению'),
+  dateEnd: yup.string().required('Поле обязательно к заполнению'),
+  description: yup.string().required('Поле обязательно к заполнению'),
+  features: yup.string().required('Поле обязательно к заполнению'),
+}).required();
 
 const CourseCreate = () => {
 
@@ -41,7 +54,7 @@ const CourseCreate = () => {
 
     const [shedule, setShedule] = React.useState<null | string>(null);
 
-    const { register, formState: { errors }, handleSubmit } = useForm<CourseFormValues>({ mode: 'onTouched'});
+    const { register, formState: { errors }, handleSubmit } = useForm<CourseFormValues>({ mode: 'onTouched', resolver: yupResolver(validationSchema)});
 
     const handleChangeShedule = (e: React.ChangeEvent<HTMLInputElement>) => {
       setProcessMessage(null)
@@ -84,6 +97,7 @@ const CourseCreate = () => {
 
   return (
     <div className="studentForm">
+        <BackLink />
         <div className="container">
             <div className="formContent">
                 <div className="formName">Регистрация курса</div>
@@ -101,9 +115,9 @@ const CourseCreate = () => {
                       {errors.description && <p className='message'>{errors.description?.message}</p>}
                   </div>
                   <div className="formItem">
-                      <label htmlFor='description'>Состав курса (вводите через ';'):</label>
+                      <label htmlFor='features'>Состав курса (вводите через ';'):</label>
                       <textarea className="formInput" {...register(('features'))}/>
-                      {errors.description && <p className='message'>{errors.description?.message}</p>}
+                      {errors.features && <p className='message'>{errors.features?.message}</p>}
                   </div>
                   <FormSubmitButton name="Зарегистрировать"/>
                   {!shedule && <button onClick={() => inputSheduleRef.current?.click()} type="button" className='uploads-button' disabled={sheduleIsLoading}>Загрузить расписание</button>}

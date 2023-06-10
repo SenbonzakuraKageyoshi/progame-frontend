@@ -1,0 +1,29 @@
+.courseMembersMain{
+    margin-top: 20px;
+}
+
+.courseName{
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.placesValue{
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.studentsItem{
+    &:not(:first-child){
+        margin-top: 15px;
+    }
+}
+
+.memberName{
+    color: var(--blue);
+}
+
+.memberStatus{
+    font-weight: 700;
+}

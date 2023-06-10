@@ -9,6 +9,8 @@ import { User } from '../../types/user';
 import BigLoader from '../../components/BigLoader/BigLoader';
 import { useAppSelector } from '../../redux/redux-hooks';
 import { user as userSelector } from '../../redux/selectors';
+import BackLink from '../../components/BackLink/BackLink';
+import * as yup from 'yup';
 
 const studentInputs = [
   {id: 1, name: 'firstName', label: 'Имя', type: 'text'},
@@ -17,6 +19,14 @@ const studentInputs = [
   {id: 4, name: 'email', label: 'Email', type: 'text'},
   {id: 5, name: 'telephone', label: 'Номер телефона (начиная с 8)', type: 'number'},
 ] as const;
+
+const validationSchema = yup.object({
+  firstName: yup.string().required('Поле обязательно к заполнению'),
+  lastName: yup.string().required('Поле обязательно к заполнению'),
+  patronymic: yup.string().required('Поле обязательно к заполнению'),
+  email: yup.string().email('Введите корректную почту').required('Поле обязательно к заполнению'),
+  telephone: yup.string().required('Поле обязательно к заполнению').min(11, 'Номер состоит из 11 цифр, начиная с 8').max(11, 'Номер состоит из 11 цифр, начиная с 8'),
+}).required();
 
 const EditUser = () => {
 
@@ -38,7 +48,7 @@ const EditUser = () => {
 
     const [processMessage, setProcessMessage] = React.useState<null | string>(null);
 
-    const { register, formState: { errors }, handleSubmit } = useForm<StudentFromValues>({ mode: 'onTouched'});
+    const { register, formState: { errors }, handleSubmit } = useForm<StudentFromValues>({ mode: 'onTouched', resolver: yupResolver(validationSchema)});
 
     React.useEffect(() => {
         getUser(Number(window.location.pathname.replace(/[^+\d]/g, '')))
@@ -60,6 +70,7 @@ const EditUser = () => {
     return (
         <div className="studentForm">
             <div className="container">
+                <BackLink />
                 <div className="formContent">
                     <div className="formName">Редактирование данные пользователя</div>
                     <form className="loginForm" onSubmit={handleSubmit(onSubmitHandler)}>

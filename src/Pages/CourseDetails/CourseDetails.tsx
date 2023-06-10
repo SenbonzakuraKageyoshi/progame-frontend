@@ -6,10 +6,12 @@ import { useAppSelector } from '../../redux/redux-hooks';
 import { user } from '../../redux/selectors';
 import BigLoader from '../../components/BigLoader/BigLoader';
 import { serverUrl } from '../../api/api';
+import styles from './courseDetails.module.scss';
+import BackLink from '../../components/BackLink/BackLink';
 
 const CourseDetails = () => {
 
-  const { data, status } = useAppSelector(user);
+  const { data } = useAppSelector(user);
 
   const [course, setCourse] = React.useState<null | Course>(null);
 
@@ -31,31 +33,34 @@ const CourseDetails = () => {
   }else{
     return (
       <div className="courseDetails">
+        <BackLink />
         <div className="container">
-            <div className="courseDetailsTitle">Информация о курсе '{course.name}'</div>
-            <ul className="courseDetailsList">
-              <li className="courseDetailsListItem">
+            <div className="formContent">
+              <div className="formName">Информация о курсе '{course.name}'</div>
+            </div>
+            <ul className={styles.courseDetailsList}>
+              <li className={styles.courseDetailsListItem}>
                 Преподаватель: {course.teacher}
               </li> 
-              <li className="courseDetailsListItem">
+              <li className={styles.courseDetailsListItem}>
                 Цена: {course.price}
               </li>
-              <li className="courseDetailsListItem">
+              <li className={styles.courseDetailsListItem}>
                 Занято мест: {course.closedPlaces}
               </li>
-              <li className="courseDetailsListItem">
+              <li className={styles.courseDetailsListItem}>
                 Дата начала: {course.dateStart}
               </li>
-              <li className="courseDetailsListItem">
+              <li className={styles.courseDetailsListItem}>
                 Дата окончания: {course.dateEnd}
               </li>
             </ul>
-            <p className="courseDescription">Описание: {course.description}</p>
-            <ul className="courseFeatures">
-              <div className="courseFeaturesTitle">Что входитв курс:</div>
-                {course.features.split(';').map((el) => (
-                    <li className="courseFeaturesItem">
-                      {el}
+            <div className={styles.courseDescription}>Описание: <p>{course.description}</p></div>
+            <ul className={styles.courseFeatures}>
+              <div className="courseFeaturesTitle">Что входит курс:</div>
+                {course.features.split(';').map((el, idx) => (
+                    <li className="courseFeaturesItem" key={el}>
+                      {idx + 1}. {el}
                     </li>
                 ))}
             </ul>

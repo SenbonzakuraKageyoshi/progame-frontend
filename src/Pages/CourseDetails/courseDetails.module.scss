@@ -1,0 +1,17 @@
+.courseDetailsListItem{
+    &:not(:first-child){
+        margin-top: 10px;
+    }
+}
+
+.courseDescription{
+    margin-top: 20px;
+}
+
+.courseFeatures{
+    margin-top: 20px;
+}
+
+.courseDetailsList{
+    margin-top: 20px;
+}

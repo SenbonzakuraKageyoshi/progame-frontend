@@ -8,6 +8,8 @@ import { User } from '../../types/user';
 import { addStudentToCourse, removeStudentToCourse } from '../../services/courseService';
 import { useAppSelector } from '../../redux/redux-hooks';
 import { user } from '../../redux/selectors';
+import styles from './courseMembers.module.scss'
+import BackLink from '../../components/BackLink/BackLink';
 
 const CourseMembers = () => {
 
@@ -102,50 +104,53 @@ const CourseMembers = () => {
   }else{
     return (
         <div className="CourseMembers">
+            <BackLink />
             <div className="container">
                 <div className="formContent">
                     <div className="formName">Добавление / удаление студентов для курса</div>
-                    <div className="courseName">{course.name}</div>
-                    {availablePlaces ? <div className='placesValue'>Доступных мест: {availablePlaces}</div> : <div className='placesValue'>Все места заняты</div>}
-                    <ul className="students">
-                        {students.map((el) => (
-                            <li className="studentsItem" key={el.id}>
-                                {el.lastName} {el.firstName} {el.patronymic}
-                                {
-                                addedStudents.length === 0
-                                &&
-                                <>
-                                <p>Статус: Не добавлен</p>
-                                <button className="actionButton" onClick={() => onAddHandler(el.id)}>Добавить</button>
-                                </>
-                                }
-                                {
-                                addedStudents.length !== 0
-                                ?
-                                addedStudents.includes(el.id)
-                                ?
-                                    <>
-                                    <p>Статус: Добавлен</p>
-                                    <button className="actionButton" onClick={() => onRemoveHandler(el.id)}>Удалить</button>
-                                    </>
-                                    :   
-                                    <>
-                                    <p>Статус: Не добавлен</p>
+                    <div className={styles.courseMembersMain}>
+                        <div className={styles.courseName}>{course.name}</div>
+                        {availablePlaces ? <div className={styles.placesValue}>Доступных мест: {availablePlaces}</div> : <div className={styles.placesValue}>Все места заняты</div>}
+                        <ul className="students">
+                            {students.map((el) => (
+                                <li className={styles.studentsItem} key={el.id}>
+                                    <div className={styles.memberName}>{el.lastName} {el.firstName} {el.patronymic}</div>
                                     {
-                                    availablePlaces
+                                    addedStudents.length === 0
+                                    &&
+                                    <>
+                                    <p className={styles.memberStatus}>Статус: Не добавлен</p>
+                                    <button className="cardButton" onClick={() => onAddHandler(el.id)}>Добавить</button>
+                                    </>
+                                    }
+                                    {
+                                    addedStudents.length !== 0
                                     ?
-                                    <button className="actionButton" onClick={() => onAddHandler(el.id)}>Добавить</button>
+                                    addedStudents.includes(el.id)
+                                    ?
+                                        <>
+                                        <p className={styles.memberStatus}>Статус: Добавлен</p>
+                                        <button className="cardButton" onClick={() => onRemoveHandler(el.id)} style={{background: 'var(--red)'}}>Удалить</button>
+                                        </>
+                                        :   
+                                        <>
+                                        <p className={styles.memberStatus}>Статус: Не добавлен</p>
+                                        {
+                                        availablePlaces
+                                        ?
+                                        <button className="cardButton" onClick={() => onAddHandler(el.id)}>Добавить</button>
+                                        :
+                                        null
+                                        }
+                                        </>
                                     :
                                     null
                                     }
-                                    </>
-                                :
-                                null
-                                }
-                            </li>
-                        ))}
-                    </ul>
-                    {processMessage && <p className='message'>{processMessage}</p>}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    {processMessage && <p className='message' style={{marginTop: '15px'}}>{processMessage}</p>}
                 </div>
             </div>
         </div>

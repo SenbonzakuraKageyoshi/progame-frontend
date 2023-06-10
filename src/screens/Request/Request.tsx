@@ -37,7 +37,7 @@ const Request = ({ role, currentUserId }: IRequest) => {
             {requests.map((el) => (
                 <RequestItem
                     setRequests={setRequests}
-                    key={el.id}
+                    key={el.createdAt}
                     role={role}
                     id={el.id}
                     text={el.text}

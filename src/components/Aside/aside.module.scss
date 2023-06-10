@@ -6,7 +6,7 @@
     align-items: center;
     flex-direction: column;
     padding: 15px 0px;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     transition: left 0.4s;
@@ -24,7 +24,7 @@
     padding: 15px 0px;
     top: 0;
     left: -300px;
-    position: absolute;
+    position: fixed;
     transition: left 0.4s;
     z-index: 10;
 }

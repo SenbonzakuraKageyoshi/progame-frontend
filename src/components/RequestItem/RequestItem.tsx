@@ -48,8 +48,8 @@ const RequestItem = (props: IRequestItem) => {
                 Дата получения: {new Date(props.createdAt).toLocaleDateString()}
             </li>
         </ul>
-        {!isStatusChanged && <button onClick={() => onChangeStatusHandler('Принята')} className="cardButton">Принять</button>}
-        {!isStatusChanged && <button onClick={() => onChangeStatusHandler('Отклонена')}  className="cardButton" style={{background: 'var(--red)'}}>Отклонить</button>}
+        {!isStatusChanged && props.role === 'admin' && <button onClick={() => onChangeStatusHandler('Принята')} className="cardButton">Принять</button>}
+        {!isStatusChanged && props.role === 'admin' && <button onClick={() => onChangeStatusHandler('Отклонена')}  className="cardButton" style={{background: 'var(--red)'}}>Отклонить</button>}
         {props.role === 'admin' &&  <button onClick={onRemoveHndler} className="cardButton" style={{background: 'var(--red)'}}>Удалить</button>}
     </div>
   )

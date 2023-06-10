@@ -136,6 +136,7 @@ const Courses = ({ userFullName, role, type, currentUserId, telephone, email }: 
           <div className="list">
             {(courses as StudentCourse[]).map((el) => (
               <CourseItem
+              courseHaveRequest={true}
               dateStart={el.Course.dateStart}
               dateEnd={el.Course.dateEnd}
               userFullName={userFullName}
